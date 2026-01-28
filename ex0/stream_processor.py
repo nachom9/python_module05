@@ -4,21 +4,88 @@ from abc import ABC, abstractmethod
 from typing import Any, List, Dict, Union, Optional
 
 class DataProcessor(ABC):
+
+    @abstractmethod
+    def process(self, data: Any) -> str:
+        pass
+
+    @abstractmethod
+    def validate(self, data: Any) -> bool:
+        pass
+
+    def format_output(self, result: str) -> str:
+        return ("Output: " + result)
+
+
+class NumericProcessor(DataProcessor):
+
+
+    def process(self, data: Any) -> str:
+
+        print("Initializing Numeric Processor...")
+        number_count = 0
+        sum = 0
+        
+        print(f"Processing data: {data}")
+        for number in data:
+            if self.validate(number):
+                number_count += 1
+                sum += number
+        
+        avg = sum / number_count
+        result = f"Processed {number_count} numeric values, sum={sum}, avg={avg}"
+        return(result)
+        
+
+    def validate(self, data: Any) -> bool:
+
+        try:
+            int(data)
+            return True
+        except ValueError as e:
+            return False
+
+
+class TextProcessor(DataProcessor):
     
+    def process(self, data: Any) -> str:
+
+        print("Initializing Numeric Processor...")
+        number_count = 0
+        sum = 0
+        
+        print(f"Processing data: {data}")
+        for number in data:
+            if self.validate(number):
+                number_count += 1
+                sum += number
+        
+        avg = sum / number_count
+        result = f"Processed {number_count} numeric values, sum={sum}, avg={avg}"
+        return(result)
+
+    def validate(self, data: Any) -> bool:
+        pass
+
+
+class LogProcessor(DataProcessor):
+
     def process(self, data: Any) -> str:
         pass
 
     def validate(self, data: Any) -> bool:
         pass
 
-    def format_output(self, result: str) -> str:
-        pass
+
+def main():
+    print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n")
+    numeric = NumericProcessor()
+    text = TextProcessor()
+    log = LogProcessor()
+    numeric_result = numeric.process([1, 2, 'e', 4, 5])
+    print(numeric.format_output(numeric_result))
 
 
-class NumericProcessor(DataProcessor):
 
-
-class TextProcessor(DataProcessor):
-
-
-class LogProcessor(DataProcessor):
+if __name__ == "__main__":
+    main()
