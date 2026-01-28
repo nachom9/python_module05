@@ -50,12 +50,12 @@ class TextProcessor(DataProcessor):
     
     def process(self, data: Any) -> str:
 
-        print("Initializing Numeric Processor...")
-        number_count = 0
-        sum = 0
+        print("Initializing Text Processor...")
+        word_count = 0
+        letter_count = 0
         
         print(f"Processing data: {data}")
-        for number in data:
+        for character in data:
             if self.validate(number):
                 number_count += 1
                 sum += number
@@ -65,7 +65,10 @@ class TextProcessor(DataProcessor):
         return(result)
 
     def validate(self, data: Any) -> bool:
-        pass
+        if isinstance(data, str):
+            return True
+        return False
+
 
 
 class LogProcessor(DataProcessor):
@@ -82,8 +85,12 @@ def main():
     numeric = NumericProcessor()
     text = TextProcessor()
     log = LogProcessor()
-    numeric_result = numeric.process([1, 2, 'e', 4, 5])
-    print(numeric.format_output(numeric_result))
+    numeric_data = [1, 2, 'e', 4, 5]
+    text_data = "Hello Nexus World!"
+    numeric_result = numeric.process(numeric_data)
+    text_result = text.process(text_data)
+    print(numeric.format_output(numeric_result), '\n')
+
 
 
 
