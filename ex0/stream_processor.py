@@ -67,7 +67,9 @@ class TextProcessor(DataProcessor):
             print(f"Error {e}")
             return
         for char in data:
-            if char != ' ' and not data[ch_count - 1].isascii():
+            if word_count == 0 and char != ' ':
+                word_count += 1
+            elif char != ' ' and not data[ch_count - 1] != ' ':
                 word_count += 1
             ch_count += 1
 
