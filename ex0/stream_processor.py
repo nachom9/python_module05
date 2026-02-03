@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
 from abc import ABC, abstractmethod
-from typing import Any, List, Dict, Union, Optional
+from typing import Any, List, Optional
 
 
 class DataProcessor(ABC):
 
     @abstractmethod
-    def process(self, data: Any) -> str:
+    def process(self, data: Any) -> Optional[str]:
         pass
 
     @abstractmethod
@@ -20,8 +20,10 @@ class DataProcessor(ABC):
 
 class NumericProcessor(DataProcessor):
 
-    def process(self, data: Any) -> str:
+    def __init__(self):
         print("Initializing Numeric Processor...")
+
+    def process(self, data: Any) -> Optional[str]:
         number_count = 0
         sum = 0
 
@@ -52,8 +54,10 @@ class NumericProcessor(DataProcessor):
 
 class TextProcessor(DataProcessor):
 
-    def process(self, data: Any) -> str:
+    def __init__(self):
         print("Initializing Text Processor...")
+
+    def process(self, data: Any) -> Optional[str]:
         word_count = 0
         ch_count = 0
 
@@ -84,8 +88,10 @@ class TextProcessor(DataProcessor):
 
 class LogProcessor(DataProcessor):
 
-    def process(self, data: Any) -> str:
+    def __init__(self) -> None:
         print("Initializing Log Processor...")
+
+    def process(self, data: Any) -> Optional[str]:
         result = ''
         found = False
 
@@ -116,28 +122,43 @@ class LogProcessor(DataProcessor):
         return False
 
 
-def main():
+def polymorphic_demo(processors: List[tuple[DataProcessor, Any]]) -> None:
+
+    i = 1
+    for processor, data in processors:
+        result = processor.process(data)
+        if result:
+            print(f"Result {i}: {result}\n")
+        i += 1
+
+
+def main() -> None:
     print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n")
-    numeric = NumericProcessor()
-    text = TextProcessor()
-    log = LogProcessor()
     numeric_data = [1, 2, 3, 4, 5]
     text_data = "Hello Nexus World"
     log_data = "ERROR: Connection timeout"
 
+    numeric = NumericProcessor()
     numeric_result = numeric.process(numeric_data)
     if numeric_result:
         print(numeric.format_output(numeric_result))
     print()
 
+    text = TextProcessor()
     text_result = text.process(text_data)
     if text_result:
         print(text.format_output(text_result))
     print()
 
+    log = LogProcessor()
     log_result = log.process(log_data)
     if log_result:
         print(log.format_output(log_result))
+
+    print("\n=== Polymorphic Processing Demo ===")
+
+    processors = [(numeric, numeric_data), (text, text_data), (log, log_data)]
+    polymorphic_demo(processors)
 
 
 if __name__ == "__main__":
