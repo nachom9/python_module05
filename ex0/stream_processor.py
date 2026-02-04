@@ -5,25 +5,31 @@ from typing import Any, List, Optional
 
 
 class DataProcessor(ABC):
+    """Abstract base class defining the interface for data processors."""
 
     @abstractmethod
     def process(self, data: Any) -> Optional[str]:
+        """Process the input data and return a string result or None."""
         pass
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
+        """Validate the input data, return True if valid."""
         pass
 
     def format_output(self, result: str) -> str:
+        """Format the processed result for display."""
         return ("Output: " + result)
 
 
 class NumericProcessor(DataProcessor):
+    """Processes numeric data: sums and averages numbers."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         print("Initializing Numeric Processor...")
 
     def process(self, data: Any) -> Optional[str]:
+        """Process numeric data to calculate sum and average."""
         number_count = 0
         sum = 0
 
@@ -41,7 +47,7 @@ class NumericProcessor(DataProcessor):
         return (result)
 
     def validate(self, data: Any) -> bool:
-
+        """Ensure all items in data are numeric."""
         try:
             for number in data:
                 int(number)
@@ -53,11 +59,13 @@ class NumericProcessor(DataProcessor):
 
 
 class TextProcessor(DataProcessor):
+    """Processes text data: counts words and characters."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         print("Initializing Text Processor...")
 
     def process(self, data: Any) -> Optional[str]:
+        """Process text to count characters and words."""
         word_count = 0
         ch_count = 0
 
@@ -81,17 +89,19 @@ class TextProcessor(DataProcessor):
         return (result)
 
     def validate(self, data: Any) -> bool:
-        if isinstance(data, str):
-            return True
-        return False
+        """Check if data is a string."""
+        return isinstance(data, str)
 
 
 class LogProcessor(DataProcessor):
+    """Processes log data: detects errors and extracts log messages."""
 
     def __init__(self) -> None:
         print("Initializing Log Processor...")
 
     def process(self, data: Any) -> Optional[str]:
+        """Process log entries to detect errors and capture message
+        after colon."""
         result = ''
         found = False
 
@@ -115,7 +125,7 @@ class LogProcessor(DataProcessor):
         return (result)
 
     def validate(self, data: Any) -> bool:
-
+        """Check if the log entry contains a colon character."""
         for ch in data:
             if ch == ':':
                 return True
@@ -123,7 +133,7 @@ class LogProcessor(DataProcessor):
 
 
 def polymorphic_demo(processors: List[tuple[DataProcessor, Any]]) -> None:
-
+    """Demonstrate polymorphic processing for multiple data processors."""
     i = 1
     for processor, data in processors:
         result = processor.process(data)
@@ -133,6 +143,7 @@ def polymorphic_demo(processors: List[tuple[DataProcessor, Any]]) -> None:
 
 
 def main() -> None:
+    """Main function to run the data processors and polymorphic demo."""
     print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n")
     numeric_data = [1, 2, 3, 4, 5]
     text_data = "Hello Nexus World"
@@ -155,10 +166,12 @@ def main() -> None:
     if log_result:
         print(log.format_output(log_result))
 
-    print("\n=== Polymorphic Processing Demo ===")
+    print("\n=== Polymorphic Processing Demo ===\n")
 
     processors = [(numeric, numeric_data), (text, text_data), (log, log_data)]
     polymorphic_demo(processors)
+
+    print("Foundation systems online. Nexus ready for advanced streams.")
 
 
 if __name__ == "__main__":
