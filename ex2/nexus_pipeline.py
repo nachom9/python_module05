@@ -137,7 +137,7 @@ class NexusManager:
                 i += 1
                 print()
         except TypeError:
-            print("Error. No data received")
+            print("Error detected in Stage 2. No data received")
 
 
 def main() -> None:
