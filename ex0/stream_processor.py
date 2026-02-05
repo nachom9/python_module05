@@ -8,7 +8,7 @@ class DataProcessor(ABC):
     """Abstract base class defining the interface for data processors."""
 
     @abstractmethod
-    def process(self, data: Any) -> Optional[str]:
+    def process(self, data: Any) -> str:
         """Process the input data and return a string result or None."""
         pass
 
@@ -28,7 +28,7 @@ class NumericProcessor(DataProcessor):
     def __init__(self) -> None:
         print("Initializing Numeric Processor...")
 
-    def process(self, data: Any) -> Optional[str]:
+    def process(self, data: Any) -> str:
         """Process numeric data to calculate sum and average."""
         number_count = 0
         sum = 0
@@ -64,7 +64,7 @@ class TextProcessor(DataProcessor):
     def __init__(self) -> None:
         print("Initializing Text Processor...")
 
-    def process(self, data: Any) -> Optional[str]:
+    def process(self, data: Any) -> str:
         """Process text to count characters and words."""
         word_count = 0
         ch_count = 0

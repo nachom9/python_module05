@@ -107,7 +107,7 @@ class TransformStage:
 class OutputStage:
     """Stage 3: Output formatting and delivery."""
 
-    def process(self, data: Any) -> str:
+    def process(self, data: Any) -> Any:
         print("Stage 3: Output formatting and delivery")
         data_str: str = str(data)
         return "Output " + data_str
