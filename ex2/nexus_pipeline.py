@@ -128,22 +128,14 @@ class NexusManager:
     def process_data(self, data: Any) -> None:
         """Process data through all managed pipelines."""
         try:
-            if len(data) > 1:
-                i: int = 0
-                for pipeline in self.pipelines:
-                    try:
-                        pipeline.process(data[i])
-                    except ValueError:
-                        return
-                    i += 1
-                    print()
-            else:
-                for pipeline in self.pipelines:
-                    try:
-                        pipeline.process(data)
-                    except ValueError:
-                        return
-                    print()
+            i: int = 0
+            for pipeline in self.pipelines:
+                try:
+                    pipeline.process(data[i])
+                except ValueError:
+                    return
+                i += 1
+                print()
         except TypeError:
             print("Error. No data received")
 
